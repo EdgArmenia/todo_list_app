@@ -21,7 +21,7 @@ class MyProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void popTextField() {
+  void removeLastTextField() {
     if (_widgetList.length > 1) {
       _widgetList.removeLast();
       textFieldsList.then((value) => value.textFields.removeLast());
@@ -30,15 +30,22 @@ class MyProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeFocus(BuildContext context, int currentField, int nextField) {
-    _widgetList[currentField].getFocus.unfocus();
-    writeJson(textFieldsList);
+  void removeTextFieldByIndex(int index) {
+    _widgetList.removeAt(index);
+    textFieldsList.then((value) => value.textFields.removeAt(index));
 
-    if (_widgetList[currentField] != _widgetList.last) {
-      FocusScope.of(context).requestFocus(_widgetList[nextField].getFocus);
-    }
     notifyListeners();
   }
+
+  // void changeFocus(BuildContext context, int currentField, int nextField) {
+  //   _widgetList[currentField].getFocus.unfocus();
+  //   writeJson(textFieldsList);
+
+  //   if (_widgetList[currentField] != _widgetList.last) {
+  //     FocusScope.of(context).requestFocus(_widgetList[nextField].getFocus);
+  //   }
+  //   notifyListeners();
+  // }
 
   void setData(TextFieldModel model, int index) {
     _widgetList[index].model = model;
